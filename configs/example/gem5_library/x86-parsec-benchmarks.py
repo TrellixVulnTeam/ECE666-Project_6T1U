@@ -67,7 +67,7 @@ from m5.stats.gem5stats import get_simstat
 
 requires(
     isa_required = ISA.X86,
-    coherence_protocol_required=CoherenceProtocol.MESI_TWO_LEVEL,
+    coherence_protocol_required=CoherenceProtocol.FMESI_TWO_LEVEL,
     kvm_required=True,
 )
 
@@ -107,17 +107,18 @@ parser.add_argument(
     "--n_proc",
     type = int,
     default=4)
+
 args = parser.parse_args()
 
 # Setting up all the fixed system parameters here
 # Caches: MESI Two Level Cache Hierarchy
 
 from gem5.components.cachehierarchies.ruby.\
-    mesi_two_level_cache_hierarchy import(
-    MESITwoLevelCacheHierarchy,
+    fmesi_two_level_cache_hierarchy import(
+    FMESITwoLevelCacheHierarchy,
 )
 
-cache_hierarchy = MESITwoLevelCacheHierarchy(
+cache_hierarchy = FMESITwoLevelCacheHierarchy(
     l1d_size = "32kB",
     l1d_assoc = 8,
     l1i_size="32kB",
