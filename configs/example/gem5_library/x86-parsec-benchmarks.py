@@ -102,6 +102,11 @@ parser.add_argument(
     help = "Simulation size the benchmark program.",
     choices = size_choices,
 )
+
+parser.add_argument(
+    "--n_proc",
+    type = int,
+    default=4)
 args = parser.parse_args()
 
 # Setting up all the fixed system parameters here
@@ -137,7 +142,7 @@ memory = DualChannelDDR4_2400(size = "3GB")
 processor = SimpleSwitchableProcessor(
     starting_core_type=CPUTypes.KVM,
     switch_core_type=CPUTypes.TIMING,
-    num_cores=2,
+    num_cores=args.n_proc,
 )
 
 # Here we setup the board. The X86Board allows for Full-System X86 simulations
@@ -165,7 +170,7 @@ board = X86Board(
 command = "cd /home/gem5/parsec-benchmark;".format(args.benchmark) \
     + "source env.sh;" \
     + "parsecmgmt -a run -p {} -c gcc-hooks -i {} \
-        -n {};".format(args.benchmark, args.size, "2") \
+        -n {};".format(args.benchmark, args.size, args.n_proc) \
     + "sleep 5;" \
     + "m5 exit;" \
 
