@@ -5,12 +5,13 @@
 #   GEM5_OPT
 #   BM_DATASET
 #   PARSECDIR
+#   PROTOCOL
 
 gem5_nCores="${GEM5_NCORES:=4}"
 
 gem5_result_prefix="project/results"
 bm_dataset="${BM_DATASET:=simsmall}"
-gem5_test_case="${gem5_nCores}-${bm_dataset}-se-mesi"
+gem5_test_case="${gem5_nCores}-${bm_dataset}-se-${PROTOCOL:=mesi}"
 
 # gem5 Settings
 gem5_dir="${PWD}"
